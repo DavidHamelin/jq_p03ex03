@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>JQ - Part03 Ex 03</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+    <label for="text">Saisissez un nombre entre 0 et 100 :</label><textarea name="text" id="text" placeholder="Entrez un nombre ici..." autofocus></textarea>
+    <button type="button" name="valid" id="valid">Valider</button>
+    <label for="help">Indice :</label><textarea name="help" id="help"></textarea>
+    <label for="count">Nombre d'essai :</label><textarea name="count" id="count">0</textarea>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+            var randomized = Math.floor(Math.random() * (101 - 0) + 1);
+            var userAnswer;
+            var counter = 0;
+
+            $('#valid').click(function () {
+                // Valeur saisie par l'utilisateur
+                userAnswer = $('textarea').val();
+                // Si mauvaise réponse :
+                if (userAnswer != randomized) {
+                    // N'accepte que les nombres entiers
+                    var regexNum = /^[0-9]+$/m;
+                    if ((regexNum.test(userAnswer) === false) || (userAnswer < 0) || (userAnswer > 100)) {
+                        $('#help').html(`Nombre non valide :\n${userAnswer}`);
+                    }
+                    else if (userAnswer < randomized) {
+                        $('#help').html(`${userAnswer} est trop petit !`);
+                    }
+                    else if (userAnswer > randomized) {
+                        $('#help').html(`${userAnswer} est trop grand !`);
+                    }
+                    else {
+                        $('#help').html(`${userAnswer} est une réponse invalide !`);
+                    }
+                    ++counter;
+                    $('#count').html(counter);
+                }
+                // Si bonne réponse :
+                else {
+                    $('#help').html(`BRAVO ! \n${userAnswer} est le nombre mystère !`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
